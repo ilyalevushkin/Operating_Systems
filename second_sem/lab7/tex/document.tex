@@ -1,0 +1,184 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[T2A]{fontenc}			
+\usepackage[utf8]{inputenc}			
+\usepackage[english,russian]{babel}	
+
+\usepackage[
+bookmarks=true, colorlinks=true, unicode=true,
+urlcolor=black,linkcolor=black, anchorcolor=black,
+citecolor=black, menucolor=black, filecolor=black,
+]{hyperref}
+
+\usepackage{color}
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{black}}
+\DeclareCaptionFormat{listing}{\colorbox{white}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} 
+\usepackage{wasysym}
+
+\usepackage{graphicx}
+%\usepackage[cache=false]{minted}
+\usepackage{cmap}
+\usepackage{indentfirst}
+
+\usepackage{listings} 
+\usepackage{fancyvrb}
+
+\usepackage{geometry}
+\geometry{left=2cm}
+\geometry{right=1.5cm}
+\geometry{top=1cm}
+\geometry{bottom=2cm}
+
+\setlength{\parindent}{5ex}
+\setlength{\parskip}{0.5em}
+
+\usepackage{pgfplots}
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+
+\begin{document}
+	\lstset{ %
+		language=C,                 % выбор языка для подсветки (здесь это С)
+		basicstyle=\small\sffamily, % размер и начертание шрифта для подсветки кода
+		numbers=left,               % где поставить нумерацию строк (слева\справа)
+		numberstyle=\tiny,           % размер шрифта для номеров строк
+		stepnumber=1,                   % размер шага между двумя номерами строк
+		numbersep=5pt,                % как далеко отстоят номера строк от подсвечиваемого кода
+		backgroundcolor=\color{white}, % цвет фона подсветки - используем \usepackage{color}
+		showspaces=false,            % показывать или нет пробелы специальными отступами
+		showstringspaces=false,      % показывать или нет пробелы в строках
+		showtabs=false,             % показывать или нет табуляцию в строках
+		frame=single,              % рисовать рамку вокруг кода
+		tabsize=2,                 % размер табуляции по умолчанию равен 2 пробелам
+		captionpos=t,              % позиция заголовка вверху [t] или внизу [b] 
+		breaklines=true,           % автоматически переносить строки (да\нет)
+		breakatwhitespace=false, % переносить строки только если есть пробел
+		escapeinside={\%*}{*)}   % если нужно добавить комментарии в коде
+	}
+	
+	% Титульный лист
+	\begin{figure}[h!]
+		\begin{center}
+			{\includegraphics[scale = 0.4]{titul.jpg}}
+			\label{titul}
+		\end{center}
+	\end{figure}
+	
+	\vspace*{15mm} 
+	
+	\huge
+	\begin{center}
+		Дисциплина: <<Операционные системы>>
+	\end{center}
+	
+	\begin{center}
+		Лабораторная работа №7
+	\end{center}
+
+	
+	\huge
+	\begin{center}
+		Тема работы:\\
+		<<Системный вызов open()>>
+	\end{center}
+	\vspace*{30mm} 
+	
+	\large
+	\begin{flushright}
+		Студент: Левушкин И. К. \\
+		Группа: ИУ7-62Б \\
+		Преподаватель: Рязанова Н. Ю. \\
+	\end{flushright}
+	
+	\vspace*{30mm}
+	\begin{center}
+		Москва, 2020 г.  
+	\end{center}
+	\thispagestyle{empty}
+	
+	
+	\newpage
+	
+	\section*{Задание}
+	
+	Построить схему выполнения системного вызова open() в зависимости от значения основных флагов определяющих открытие файла на чтение, на запись, на выполнение и на создание нового файла. В схеме должны быть названия функций и кратко указаны выполняемые ими действия. По ГОСТу это делается с помощью выносных линий в фигурных скобках.
+	В схему нужно обязательно включить следующие действия, выполняемые соответствующими функциями ядра:
+	\begin{enumerate}
+		\item копирование названия файла из пространства пользователя в пространство ядра;
+		\item блокировка/разблокировка (spinlock) структуры files\_struct и других действий в разных функциях;
+		\item алгоритм поиска свободного дескриптора открытого файла;
+		\item работу со структурой nameidata – инициализация ее полей;
+		\item алгоритм разбора пути (кратко);
+		\item инициализацию полей struct file;
+		\item «открытие» файла для чтения, записи или выполнения; 
+		\item создание inode в случае отсутствия открываемого файла.
+	\end{enumerate}
+	Отчет должен включать: титульный лист и схему алгоритма работы системного вызова open().
+	
+	\newpage
+	
+	\section*{Схема выполнения системного вызова open()}
+	
+	\begin{figure}[h!]
+		\begin{center}
+			{\includegraphics[scale = 0.8]{0.png}}
+			\label{0}
+		\end{center}
+	\end{figure}
+	
+	\begin{figure}[h!]
+		\begin{center}
+			{\includegraphics[scale = 0.8]{1.png}}
+			\label{1}
+		\end{center}
+	\end{figure}
+
+	\begin{figure}[h!]
+		\begin{center}
+			{\includegraphics[scale = 0.9]{2.png}}
+			\label{2}
+		\end{center}
+	\end{figure}
+
+	\begin{figure}[h!]
+		\begin{center}
+			{\includegraphics[scale = 0.8]{3.png}}
+			\label{3}
+		\end{center}
+	\end{figure}
+
+	\begin{figure}[h!]
+		\begin{center}
+			{\includegraphics[scale = 0.8]{4.png}}
+			\label{4}
+		\end{center}
+	\end{figure}
+
+
+	\begin{figure}[h!]
+		\begin{center}
+			{\includegraphics[scale = 0.8]{5.png}}
+			\label{5}
+		\end{center}
+	\end{figure}
+
+	\begin{figure}[h!]
+		\begin{center}
+			{\includegraphics[scale = 0.8]{6.png}}
+			\label{6}
+		\end{center}
+	\end{figure}
+
+
+	\begin{figure}[h!]
+		\begin{center}
+			{\includegraphics[scale = 0.8]{7.png}}
+			\label{7}
+		\end{center}
+	\end{figure}
+	
+\end{document}
